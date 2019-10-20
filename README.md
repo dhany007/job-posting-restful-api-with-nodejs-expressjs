@@ -2,7 +2,7 @@
 ![](https://img.shields.io/badge/Dependencies-Express-green.svg)
 ![](https://img.shields.io/badge/License-Beerware-yellowgreen.svg)
 
-# Jon Posting App With Express
+# Job Posting App With Express
 
 ---
 
@@ -33,8 +33,6 @@ Job Posting App is the task week 1 of Arkademy Bootcamp. Feel free to use and bo
 ## Configuration
 <ol>
   <li>Basic Configuration</li>
-  <li></li>
-  <li></li>
 </ol>
 
 ---
@@ -46,9 +44,6 @@ $ git clone https://github.com/dhany007/job-posting.git
 $ cd job-posting
 $ npm install
 ```
-
----
-
 ### Start Development Server
 ```bash
 $ npm start
