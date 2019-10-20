@@ -23,4 +23,14 @@ app.post('/', (req, res) => {
     res.send(body)
 })
 
+app.get('/:dataId', (req, res) => {
+    const dataId = req.params.dataId
+
+    if (parseInt(dataId) === 1) {
+        res.send('Data 1')
+    } else {
+        res.send('Data 2')
+    }
+})
+
 module.exports = app
