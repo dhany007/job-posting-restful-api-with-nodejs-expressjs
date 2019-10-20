@@ -1,0 +1,23 @@
+{
+  "name": "job-posting",
+  "version": "1.0.0",
+  "description": "Job Posting App is a task week one from Arkademy Bootcamp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhany007/job-posting.git"
+  },
+  "author": "Adipati Dhany",
+  "license": "Beerware",
+  "bugs": {
+    "url": "https://github.com/dhany007/job-posting/issues"
+  },
+  "homepage": "https://github.com/dhany007/job-posting#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
