@@ -30,19 +30,18 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-    conn.query('SELECT x.name_job, x.description_job, y.name_category, \
+    const { sortName } = req.query
+    conn.query(`SELECT x.name_job, x.description_job, y.name_category, \
     x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
     FROM job x \
     JOIN category y ON x.category = y.id_category \
-    JOIN company z ON x.company = z.id_company \
-    ORDER BY x.name_job ASC, y.name_category ASC, x.date_update ASC', (err, result) => {
+    JOIN company z ON x.company = z.id_company`, (err, result) => {
         if (err) {
             console.log(err)
         } else {
             res.json(result)
         }
-    })
-
+    })    
 })
 
 app.get('/category', (req, res) => {
