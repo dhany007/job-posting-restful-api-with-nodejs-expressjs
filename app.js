@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-    connection.query(`SELECT x.name_job, x.description_job, y.name_category, \
+    conn.query(`SELECT x.name_job, x.description_job, y.name_category, \
     x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
     FROM job x \
     JOIN category y ON x.category = y.id_category \
