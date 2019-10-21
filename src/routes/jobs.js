@@ -3,6 +3,6 @@ const Route = express.Router()
 
 const jobsController = require('../controllers/job')
 
-Route.get('/', jobsController)
+Route.get('/', jobsController.getJobs)
 
 module.exports = Route
