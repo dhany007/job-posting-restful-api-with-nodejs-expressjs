@@ -2,25 +2,10 @@ require('dotenv/config')
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const mysql = require('mysql')
 
 const app = express()
 const port = process.env.port || 3000
 
-const conn = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-})
-
-conn.connect((err) => {
-    if (err) {
-        console.log(`Error : ${err}\n`)
-    } else {
-        console.log('\nDatabase connected!\n')
-    }
-})
 
 app.listen(port, () => {
     console.log(`\nServer listening on port ${port}`)
@@ -30,8 +15,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-    const { sortName } = req.query
-    conn.query(`SELECT x.name_job, x.description_job, y.name_category, \
+    connection.query(`SELECT x.name_job, x.description_job, y.name_category, \
     x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
     FROM job x \
     JOIN category y ON x.category = y.id_category \
