@@ -3,14 +3,15 @@ const jobModels = require('../models/jobs')
 module.exports = {
     getJobs: (req, res) => {
         let { sortName, sortCompany, date_update, searchNameJob, searchNameCompany } = req.query
-        if (sortName == undefined) {
-            sortName = 'ASC'
+        let sortBy = 'x.name_job ASC'
+        if (sortName != undefined && sortCompany == undefined && date_update == undefined ) {
+            sortBy = 'x.name_job DESC'
         }
-        if (sortCompany == undefined) {
-            sortCompany = 'ASC'
+        if (sortName == undefined && sortCompany != undefined && date_update == undefined ) {
+            sortBy = 'z.company_name DESC'
         }
-        if (date_update == undefined) {
-            date_update = 'ASC'
+        if (sortName == undefined && sortCompany == undefined && date_update != undefined ) {
+            sortBy = 'x.date_update DESC'
         }
         if (searchNameJob == undefined) {
             searchNameJob = '%%'
@@ -18,12 +19,12 @@ module.exports = {
             searchNameJob = '%' + searchNameJob + '%'
         }
         if (searchNameCompany == undefined) {
-            searchNameCompany = ''
+            searchNameCompany = '%%'
         } else {
             searchNameCompany = '%' + searchNameCompany + '%'
         }    
         
-        jobModels.getJobs(sortName, sortCompany, date_update, searchNameJob, searchNameCompany)
+        jobModels.getJobs(sortBy, searchNameJob, searchNameCompany)
         .then(result => {
             res.json(result)
         })

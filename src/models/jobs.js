@@ -1,16 +1,15 @@
 const conn = require('../configs/db')
 
 module.exports = {
-    getJobs: (sortName, sortCompany, date_update, searchNameJob, searchNameCompany) => {
+    getJobs: (sortBy, searchNameJob, searchNameCompany) => {
         return new Promise((resolve, reject) => {
-
             conn.query(`SELECT x.id_job, x.name_job, x.description_job, y.name_category, \
             x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
             FROM job x \
             JOIN category y ON x.category = y.id_category \
             JOIN company z ON x.company = z.id_company \
             WHERE x.name_job LIKE '${searchNameJob}' and z.name_company LIKE '${searchNameCompany}' \
-            ORDER BY x.name_job ${sortName}, z.name_company ${sortCompany}, x.date_update ${date_update} `, (err, result) => {
+            ORDER BY ${sortBy}`, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
