@@ -2,8 +2,9 @@ const jobModels = require('../models/jobs')
 
 module.exports = {
     getJobs: (req, res) => {
-        let { sortName, sortCompany, date_update, searchNameJob, searchNameCompany } = req.query
+        let { sortName, sortCompany, date_update, searchNameJob, searchNameCompany, page, eachPage } = req.query
         let sortBy = 'x.name_job ASC'
+        
         if (sortName != undefined && sortCompany == undefined && date_update == undefined ) {
             sortBy = 'x.name_job DESC'
         }
@@ -24,7 +25,16 @@ module.exports = {
             searchNameCompany = '%' + searchNameCompany + '%'
         }    
         
-        jobModels.getJobs(sortBy, searchNameJob, searchNameCompany)
+        if (page == undefined){
+            page = 1
+        }
+        if (eachPage == undefined){
+            eachPage = 3
+        }
+
+        let limitStart = (parseInt(page)-1)*parseInt(eachPage)
+        
+        jobModels.getJobs(sortBy, searchNameJob, searchNameCompany, limitStart, eachPage)
         .then(result => {
             res.json(result)
         })
