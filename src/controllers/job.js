@@ -2,7 +2,28 @@ const jobModels = require('../models/jobs')
 
 module.exports = {
     getJobs: (req, res) => {
-        jobModels.getJobs()
+        let { sortName, sortCompany, date_update, searchNameJob, searchNameCompany } = req.query
+        if (sortName == undefined) {
+            sortName = 'ASC'
+        }
+        if (sortCompany == undefined) {
+            sortCompany = 'ASC'
+        }
+        if (date_update == undefined) {
+            date_update = 'ASC'
+        }
+        if (searchNameJob == undefined) {
+            searchNameJob = '%%'
+        } else {
+            searchNameJob = '%' + searchNameJob + '%'
+        }
+        if (searchNameCompany == undefined) {
+            searchNameCompany = ''
+        } else {
+            searchNameCompany = '%' + searchNameCompany + '%'
+        }    
+        
+        jobModels.getJobs(sortName, sortCompany, date_update, searchNameJob, searchNameCompany)
         .then(result => {
             res.json(result)
         })
@@ -33,6 +54,8 @@ module.exports = {
     updateJob: (req, res) => {
         const id_job = req.params.id_job
         const data = req.body
+        let date_update = new Date().toLocaleString()
+        data.date_update = date_update
 
         jobModels.updateJob(data, id_job)
         .then(result => {
