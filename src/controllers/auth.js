@@ -45,9 +45,9 @@ module.exports = {
             if(result.length > 0){
                 const salt = result[0].salt
                 const pwHash = result[0].password
-                
+                const id = result[0].id
                 const value = setPass.sha512(password, salt)
-                const data = {email, pwHash}
+                const data = {id, email, pwHash}
 
                 const token = jwt.sign(data, configs.jwtSecret, { expiresIn: '1h' })
 
