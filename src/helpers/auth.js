@@ -19,17 +19,15 @@ module.exports = {
     },
     authAccess: (req, res, next) => {
         const accessToken = req.token
-        const userToken = req.headers['x-control-user']
-
+        const userToken = req.headers['x-access-token']
+        
         JWT.verify(accessToken, config.jwtSecret, (err, decoded) => {
+            
             if (err && err.name === 'TokenExpiredError'){
                 return res.status(403).json({ message: 'Token expired!' })
             }
             if (err && err.name === 'JsonWebTokenError'){
                 return res.status(403).json({ message: 'Token Invalid!' })
-            }
-            if (parseInt(userToken) !== parseInt(decoded.userid)){
-                return res.status(403).json({ message: 'Invalid User!' })
             }
 
             console.log('Access Granted!')

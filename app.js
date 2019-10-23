@@ -8,7 +8,6 @@ const routerNav = require('./src/index')
 const logger = require('morgan')
 
 let jwt = require('jsonwebtoken')
-let Users = require('./src/models/company')
 
 
 app.listen(port, () => {

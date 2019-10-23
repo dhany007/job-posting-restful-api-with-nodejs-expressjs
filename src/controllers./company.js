@@ -1,6 +1,5 @@
 const companyModels = require('../models/company')
-var multer = require('multer')
-var path = require ('path')
+const auth = require('../helpers/auth')
 
 module.exports = {
     getCompany: (req, res) => {
@@ -21,6 +20,7 @@ module.exports = {
             description_company }
 
         companyModels.addCompany(data)
+        
         .then(result => {
             res.json(result)
         })
