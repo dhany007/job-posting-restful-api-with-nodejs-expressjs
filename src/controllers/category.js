@@ -35,7 +35,7 @@ module.exports = {
     },
     deleteCategory: (req, res) => {
         const id_category = req.params.id_category
-
+        
         categoryModels.deleteCategory(id_category)
         .then(result => {
             res.json(result)

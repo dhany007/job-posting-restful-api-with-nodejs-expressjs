@@ -1,8 +1,9 @@
 const express = require('express')
 const Route = express.Router()
 
+const authController = require('../controllers/auth')
+
 Route
-    .post('/')
-    .post('/register')
+    .post('/register', authController.Register)
 
 module.exports = Route

@@ -7,16 +7,12 @@ module.exports = {
     customErrorResponse: (res, status, message) => {
         console.log('Error Response!')
     },
-    generateValHex: (length) => {
-        console.log('Generate Value in Hex')
-    },
-    setPassword: (password, valHex) => {
-        const hash = crypto.createHmac('sha5123', valHex)
-        hash.update(password)
+    saltHashPassword: (userPassword) => {
+        const salt = crypto.randomBytes(Math.ceil(16 / 2)).toString('hex').slice(0, 16)
+        const hash = crypto.createHmac('sha512', salt)
+        hash.update(userPassword)
         const value = hash.digest('hex')
-        return {
-            valHex: valHex,
-            passwordHash: value
-        }
+        return value
     }
+
 }
