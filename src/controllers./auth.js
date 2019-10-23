@@ -1,5 +1,7 @@
 const authModel = require('../models/auth')
 const setPass = require('../helpers/index')
+const jwt = require('jsonwebtoken')
+const configs = require('../configs/configs')
 
 module.exports = {
     Register: (req, res) => {
@@ -45,9 +47,12 @@ module.exports = {
                 const pwHash = result[0].password
                 
                 const value = setPass.sha512(password, salt)
+                const data = {email, pwHash}
+
+                const token = jwt.sign(data, configs.jwtSecret, { expiresIn: '1h' })
 
                 if(pwHash == value){
-                    res.send('Sign in success')
+                    res.send({ data, token })
                 } else {
                     res.send('email and password not macth')
                 }
@@ -59,5 +64,5 @@ module.exports = {
         .catch(err => {
             console.log(err)
         })     
-    },
+    }
 }
