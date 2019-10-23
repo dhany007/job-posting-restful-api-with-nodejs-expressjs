@@ -7,10 +7,14 @@ module.exports = {
     Register: (req, res) => {
         let { email, password, name_user } = req.body
 
-        password = setPass.saltHashPassword(password)
+        const passHash = setPass.saltHashPassword(password)
+        
+        const salt = passHash.salt
+        password = passHash.value
 
         let data = {
             email,
+            salt,
             password,
             name_user
         }
@@ -32,5 +36,8 @@ module.exports = {
         .catch(err => {
             console.log(err)
         })        
+    },
+    Login: (req, res) => {
+                
     },
 }

@@ -12,7 +12,9 @@ module.exports = {
         const hash = crypto.createHmac('sha512', salt)
         hash.update(userPassword)
         const value = hash.digest('hex')
-        return value
+        return {
+            value, salt
+        }
     }
 
 }
