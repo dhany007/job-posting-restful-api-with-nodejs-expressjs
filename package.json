@@ -32,5 +32,9 @@
     "redis": "^2.8.0",
     "url": "^0.11.0",
     "uuidv4": "^5.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-google": "^0.14.0"
   }
 }
