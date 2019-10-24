@@ -2,7 +2,8 @@ const jobModels = require('../models/jobs')
 
 module.exports = {
     getJobs: (req, res) => {
-        let { sortName, sortCompany, date_update, searchNameJob, searchNameCompany, page, eachPage } = req.query
+        const { sortName, sortCompany, date_update} = req.query
+        let { searchNameJob, searchNameCompany, page, eachPage } = req.query
         let sortBy = 'x.name_job ASC'
         
         if (sortName != undefined && sortCompany == undefined && date_update == undefined ) {
@@ -32,7 +33,7 @@ module.exports = {
             eachPage = 3
         }
 
-        let limitStart = (parseInt(page)-1)*parseInt(eachPage)
+        const limitStart = (parseInt(page)-1)*parseInt(eachPage)
         
         jobModels.getJobs(sortBy, searchNameJob, searchNameCompany, limitStart, eachPage)
         .then(result => {
@@ -65,7 +66,7 @@ module.exports = {
     updateJob: (req, res) => {
         const id_job = req.params.id_job
         const data = req.body
-        let date_update = new Date().toLocaleString()
+        const date_update = new Date().toLocaleString()
         data.date_update = date_update
 
         jobModels.updateJob(data, id_job)

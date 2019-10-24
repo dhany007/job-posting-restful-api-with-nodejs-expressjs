@@ -12,5 +12,4 @@ module.exports = {
     port: process.env.PORT || 3000,
     jwtSecret: process.env.JWT_KEY,
     headerSecret: process.env.HEADERS_SECRET
-
 }

@@ -5,12 +5,12 @@ const configs = require('../configs/configs')
 
 module.exports = {
     Register: (req, res) => {
-        let { email, password, name_user } = req.body
-
-        const salt = setPass.generateSalt(16)
+        const { email, name_user } = req.body
+        let password = req.body.password
+        const salt = setPass.genSalt(16)
         password = setPass.sha512(password,salt)
         
-        let data = {
+        const data = {
             email,
             salt,
             password,
@@ -20,9 +20,9 @@ module.exports = {
         .then(result => {
             if(result.length == 0){
                 authModel.Register(data)
-                .then(result => {
+                .then(() => {
                     //res.json(result)
-                    res.send("\nUser registered successfully!");
+                    res.send('\nUser registered successfully!');
                 })
                 .catch(err => {
                     console.log(err)
@@ -38,7 +38,7 @@ module.exports = {
         })        
     },
     Login: (req, res) => {
-        let { email, password } = req.body 
+        const { email, password } = req.body 
         
         authModel.verifyEmail(email)
         .then(result => {

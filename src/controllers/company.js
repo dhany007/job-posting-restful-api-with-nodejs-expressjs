@@ -1,5 +1,4 @@
 const companyModels = require('../models/company')
-const auth = require('../helpers/auth')
 
 module.exports = {
     getCompany: (req, res) => {

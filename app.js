@@ -14,8 +14,10 @@ app.listen(port, () => {
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use(logger('dev'))
 app.use('/', routerNav)
 app.use(cors)
+
 
 module.exports = app
