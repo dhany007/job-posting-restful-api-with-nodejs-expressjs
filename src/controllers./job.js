@@ -1,4 +1,6 @@
 const jobModels = require('../models/jobs')
+const redis = require('../helpers/redis')
+
 
 module.exports = {
     getJobs: (req, res) => {
@@ -37,6 +39,7 @@ module.exports = {
         
         jobModels.getJobs(sortBy, searchNameJob, searchNameCompany, limitStart, eachPage)
         .then(result => {
+            redis.setExp(JSON.stringify(result))
             res.json(result)
         })
         .catch(err => {

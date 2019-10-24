@@ -1,8 +1,8 @@
 const conn = require('../configs/db')
+console.time('QUERY_TIME')
 
 module.exports = {
-    getJobs: (sortBy, searchNameJob, searchNameCompany, limitStart, eachPage) => {
-        return new Promise((resolve, reject) => {
+    getJobs: (sortBy, searchNameJob, searchNameCompany, limitStart, eachPage) => new Promise((resolve, reject) => {
             conn.query(`SELECT x.id_job, x.name_job, x.description_job, y.name_category, \
             x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
             FROM job x \
@@ -10,17 +10,16 @@ module.exports = {
             JOIN company z ON x.company = z.id_company \
             WHERE x.name_job LIKE ? and z.name_company LIKE ? \
             ORDER BY ? \
-            LIMIT ?, ?`,([searchNameJob, searchNameCompany, sortBy, parseInt(limitStart), parseInt(eachPage)]), (err, result) => {
+            LIMIT ?, ?`,([searchNameJob, searchNameCompany, sortBy, parseInt(limitStart), parseInt(eachPage)]), (err, result) => { 
+                console.log('Query result : ')
                 if (!err) {
                     resolve(result)
                 } else {
                     reject(new Error (err))
                 }
             })    
-        })
-    },
-    addJob: (data) => {
-        return new Promise((resolve, reject) => {
+        }),
+    addJob: data => new Promise((resolve, reject) => {
             conn.query('INSERT INTO job SET ?', data, (err, result) => {
                 if (!err) {
                     resolve(result)
@@ -28,10 +27,8 @@ module.exports = {
                     reject(new Error (err))
                 }
             })
-        })
-    },
-    updateJob: (data, id_job) => {
-        return new Promise((resolve, reject) => {
+        }),
+    updateJob: (data, id_job) => new Promise((resolve, reject) => {
             conn.query('UPDATE job SET ? where id_job = ?', [data, id_job], (err, result) => {
                 if (!err) {
                     resolve(result)
@@ -39,10 +36,8 @@ module.exports = {
                     reject(new Error (err))
                 }
             })
-        })
-    },
-    deleteJob: (id_job) => {
-        return new Promise((resolve, reject) => {
+        }),
+    deleteJob: id_job => new Promise((resolve, reject) => {
             conn.query('DELETE FROM job WHERE id_job = ?', id_job, (err, result) => {
                 if (!err) {
                     resolve(result)
@@ -51,5 +46,4 @@ module.exports = {
                 }
             })
         })
-    }
 }

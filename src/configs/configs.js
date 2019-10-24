@@ -11,5 +11,8 @@ module.exports = {
     },
     port: process.env.PORT || 3000,
     jwtSecret: process.env.JWT_KEY,
-    headerSecret: process.env.HEADERS_SECRET
+    headerSecret: process.env.HEADERS_SECRET,
+    portRedis:  process.env.REDIS_PORT || 6379,
+    hostRedis:  process.env.REDIS_HOST || '127.0.0.1',
+    keyRedis: process.env.REDIS_KEY
 }
