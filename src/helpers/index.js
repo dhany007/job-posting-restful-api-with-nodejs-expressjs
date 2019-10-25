@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable max-len */
 const crypto = require('crypto');
 
@@ -16,4 +17,5 @@ module.exports = {
     const value = hash.digest('hex');
     return value;
   },
+  
 };

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const authModel = require('../models/auth');
 const setPass = require('../helpers/index');
 const jwt = require('jsonwebtoken');
@@ -5,7 +6,7 @@ const configs = require('../configs/configs');
 
 module.exports = {
   Register: (req, res) => {
-    const {email, nameUser} = req.body;
+    const {email, name_user} = req.body;
 
     let password = req.body.password;
     const salt = setPass.genSalt(16);
@@ -15,7 +16,7 @@ module.exports = {
       email,
       salt,
       password,
-      nameUser,
+      name_user,
     };
     authModel.verifyEmail(email)
         .then((result) => {

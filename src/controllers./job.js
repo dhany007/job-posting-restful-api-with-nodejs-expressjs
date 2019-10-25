@@ -1,24 +1,35 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 const jobModels = require('../models/jobs');
 const redis = require('../helpers/redis');
 
-
 module.exports = {
+  
   getJobs: (req, res) => {
     const {sortName, sortCompany, date_update} = req.query;
     let {searchNameJob, searchNameCompany, page, eachPage} = req.query;
-    let sortBy = 'x.name_job ASC';
 
-    if (sortName != undefined && sortCompany == undefined && date_update == undefined ) {
-      sortBy = 'x.name_job DESC';
+    let sortBy = 'x.name_job';
+    let mode = 'ASC';
+    if (sortName === undefined && sortCompany === undefined) {
+      sortBy = 'x.date_update';
+      mode = 'DESC';
+    } else if (sortName === undefined && date_update === undefined) {
+      sortBy = 'x.sortCompany';
+      mode = 'DESC';
+    } else {
+      mode = 'DESC';
     }
-    if (sortName == undefined && sortCompany != undefined && date_update == undefined ) {
-      sortBy = 'z.company_name DESC';
+    if (typeof sortCompany !== 'undefined') {
+      sortBy = 'z.company_name';
+      mode = 'DESC';
     }
-    if (sortName == undefined && sortCompany == undefined && date_update != undefined ) {
-      sortBy = 'x.date_update DESC';
+    if (typeof date_update !== 'undefined') {
+      sortBy = 'x.date_update';
+      mode = 'DESC';
     }
+    
     if (searchNameJob == undefined) {
       searchNameJob = '%%';
     } else {
@@ -38,11 +49,14 @@ module.exports = {
     }
 
     const limitStart = (parseInt(page)-1)*parseInt(eachPage);
-
-    jobModels.getJobs(sortBy, searchNameJob, searchNameCompany, limitStart, eachPage)
+    console.log(sortBy);
+    jobModels.getJobs(searchNameJob, searchNameCompany, sortBy, mode, limitStart, eachPage)
         .then((result) => {
           if (result.length != 0) {
-            redis.setExp(JSON.stringify(result));
+            const key = req.originalUrl;
+    
+            redis.setExp(key, JSON.stringify(result));
+            
             res.json(result);
           } else {
             res.send('NOT FOUND');

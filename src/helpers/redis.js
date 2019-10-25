@@ -1,6 +1,6 @@
+/* eslint-disable require-jsdoc */
 const redis = require('redis');
 const config = require('../configs/configs');
-
 const client = redis.createClient(config.portRedis, config.hostRedis);
 
 client.on('error', (err) => {
@@ -13,7 +13,9 @@ client.on('connect', () => {
 
 module.exports = {
   cache: (req, res, next) => {
-    client.get(config.keyRedis, (err, result) => {
+    const redisKey = req.originalUrl;
+
+    client.get(redisKey.toString(), (err, result) => {
       if (err) {
         throw err;
       }
@@ -28,14 +30,14 @@ module.exports = {
       }
     });
   },
-  setExp: (result, err) => {
+  setExp: (key, result, err) => {
     if (err) {
       throw err;
     } else {
-      client.setex(config.keyRedis, 3600, result);
+      client.setex(key, 20, result);
     }
   },
   delRedis: () => {
-    client.del(config.keyRedis);
+    client.flushall();
   },
 };
