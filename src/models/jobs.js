@@ -1,8 +1,27 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
 const conn = require('../configs/db');
 
 module.exports = {
+  getAllJobs: (searchNameJob, searchNameCompany, sortBy, mode) => new Promise((resolve, reject) => {
+    conn.query(`SELECT COUNT (*) as totalData, x.id_job, x.name_job, x.description_job, y.name_category, \
+    x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
+    FROM job x \
+    JOIN category y \
+    ON x.category = y.id_category \
+    JOIN company z \
+    ON x.company = z.id_company \
+    WHERE x.name_job LIKE ? and z.name_company LIKE ? \
+    ORDER BY ${sortBy} ${mode} `, ([searchNameJob, searchNameCompany]), (err, result) => {   
+      console.log('Query result : ');
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(new Error(err));
+      }
+    });
+  }),
   getJobs: (searchNameJob, searchNameCompany, sortBy, mode, limitStart, eachPage) => new Promise((resolve, reject) => {
     conn.query(`SELECT x.id_job, x.name_job, x.description_job, y.name_category, \
     x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
@@ -13,8 +32,7 @@ module.exports = {
     ON x.company = z.id_company \
     WHERE x.name_job LIKE ? and z.name_company LIKE ? \
     ORDER BY ${sortBy} ${mode} \
-    LIMIT ?, ?`, ([searchNameJob, searchNameCompany, parseInt(limitStart), parseInt(eachPage)]), (err, result) => {
-      
+    LIMIT ?, ?`, ([searchNameJob, searchNameCompany, parseInt(limitStart), parseInt(eachPage)]), (err, result) => {   
       console.log('Query result : ');
       if (!err) {
         resolve(result);

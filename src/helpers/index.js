@@ -17,5 +17,4 @@ module.exports = {
     const value = hash.digest('hex');
     return value;
   },
-  
 };

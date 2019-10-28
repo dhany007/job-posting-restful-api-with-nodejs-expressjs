@@ -21,8 +21,8 @@ module.exports = {
       }
     });
   }),
-  updateCategory: (data, id_category) => new Promise((resolve, reject) => {
-    conn.query('UPDATE category SET ? where id_category = ?', [data, id_category], (err, result) => {
+  updateCategory: (name_category, id_category) => new Promise((resolve, reject) => {
+    conn.query('UPDATE category SET ? where id_category = ?', [name_category, id_category], (err, result) => {
       if (!err) {
         resolve(result);
       } else {
