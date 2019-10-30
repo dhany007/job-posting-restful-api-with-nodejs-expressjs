@@ -4,6 +4,23 @@
 const conn = require('../configs/db');
 
 module.exports = {
+  getOneJob: (id_job) => new Promise((resolve, reject) => {
+    conn.query(`SELECT x.id_job, x.name_job, x.description_job, y.name_category, \
+    x.salary, x.location_job, z.name_company, x.date_add, x.date_update \
+    FROM job x \
+    JOIN category y \
+    ON x.category = y.id_category \
+    JOIN company z \
+    ON x.company = z.id_company \
+    WHERE x.id_job = ?`, ([id_job]), (err, result) => {   
+      console.log('Query result : ');
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(new Error(err));
+      }
+    });
+  }),
   getAllJobs: (searchNameJob, searchNameCompany, sortBy, mode) => new Promise((resolve, reject) => {
     conn.query(`SELECT COUNT (*) as totalData, x.id_job, x.name_job, x.description_job, y.name_category, \
     x.salary, x.location_job, z.name_company, x.date_add, x.date_update \

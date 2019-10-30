@@ -5,6 +5,19 @@ const jobModels = require('../models/jobs');
 const redis = require('../helpers/redis');
 
 module.exports = {
+  getOneJob: (req, res) =>{
+    const id_job = req.params.id_job;
+    jobModels.getOneJob(id_job)
+        .then((result) => {
+          redis.delRedis();
+          res.json({
+            result,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  },
   
   getJobs: (req, res) => {
     const {sortName, sortCompany, date_update} = req.query;
@@ -59,13 +72,30 @@ module.exports = {
                   if (eachPage>totalData) {
                     eachPage = totalData;
                   }
-  
+                  const currentPage = parseInt(page);
+                  let prev = '';
+                  if (page > 1) {
+                    prevPage = currentPage - 1;
+                    prev = `http://localhost:3001/?page=${prevPage}`;
+                  } else {
+                    prev = '';
+                  }
+                  
+                  let next = '';
+                  if (currentPage < totalPage) {
+                    nextPage = currentPage+1;
+                    next = `http://localhost:3001/?page=${nextPage}`;
+                  } else {
+                    next = '';
+                  }
                   redis.setExp(key, JSON.stringify({
                     info: {
                       totalData,
                       eachPage,
                       page,
                       totalPage,
+                      prev,
+                      next,
                     },
                     result,
                   }));
@@ -76,6 +106,8 @@ module.exports = {
                       eachPage,
                       page,
                       totalPage,
+                      prev,
+                      next,
                     },
                     result,
                   });

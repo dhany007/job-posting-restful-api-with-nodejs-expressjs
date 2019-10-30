@@ -12,11 +12,11 @@ app.listen(port, () => {
   console.log(`\nServer listening on port ${port}`);
 });
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(logger('dev'));
 app.use('/', routerNav);
-app.use(cors);
 
 module.exports = app;

@@ -9,6 +9,7 @@ const jobsController = require('../controllers/job');
 
 Route
     .get('/', redis.cache, jobsController.getJobs)
+    .get('/job/:id_job', jobsController.getOneJob)
     .post('/', auth.authInfo, auth.authAccess, jobsController.addJob)
     .patch('/:id_job', auth.authInfo, auth.authAccess, jobsController.updateJob)
     .delete('/:id_job', auth.authInfo, auth.authAccess, jobsController.deleteJob);

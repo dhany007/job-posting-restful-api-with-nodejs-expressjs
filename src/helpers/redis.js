@@ -34,7 +34,7 @@ module.exports = {
     if (err) {
       throw err;
     } else {
-      client.setex(key, 20, result);
+      client.setex(key, 5, result);
     }
   },
   delRedis: () => {
