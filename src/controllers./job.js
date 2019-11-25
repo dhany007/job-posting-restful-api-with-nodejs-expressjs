@@ -2,14 +2,14 @@
 /* eslint-disable max-len */
 /* eslint-disable camelcase */
 const jobModels = require('../models/jobs');
-const redis = require('../helpers/redis');
+//const redis = require('../helpers/redis');
 
 module.exports = {
   getOneJob: (req, res) =>{
     const id_job = req.params.id_job;
     jobModels.getOneJob(id_job)
         .then((result) => {
-          redis.delRedis();
+          //redis.delRedis();
           res.json({
             result,
           });
@@ -88,17 +88,17 @@ module.exports = {
                   } else {
                     next = '';
                   }
-                  redis.setExp(key, JSON.stringify({
-                    info: {
-                      totalData,
-                      eachPage,
-                      page,
-                      totalPage,
-                      prev,
-                      next,
-                    },
-                    result,
-                  }));
+                  // redis.setExp(key, JSON.stringify({
+                  //   info: {
+                  //     totalData,
+                  //     eachPage,
+                  //     page,
+                  //     totalPage,
+                  //     prev,
+                  //     next,
+                  //   },
+                  //   result,
+                  // }));
               
                   res.json({
                     info: {
@@ -134,7 +134,7 @@ module.exports = {
     };
     jobModels.addJob(data)
         .then((result) => {
-          redis.delRedis();
+          //redis.delRedis();
           res.json({
             success: true,
             message: 'success added new job',
@@ -153,7 +153,7 @@ module.exports = {
 
     jobModels.updateJob(data, id_job)
         .then((result) => {
-          redis.delRedis();
+          //redis.delRedis();
           res.json({
             success: true,
             message: 'success updated job',
@@ -169,7 +169,7 @@ module.exports = {
 
     jobModels.deleteJob(id_job)
         .then((result) => {
-          redis.delRedis();
+          //redis.delRedis();
           res.json({
             success: true,
             message: 'success deleted job',

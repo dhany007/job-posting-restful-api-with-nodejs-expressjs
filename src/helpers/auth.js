@@ -4,13 +4,10 @@ const config = require('../configs/configs');
 
 module.exports = {
   authInfo: (req, res, next) => {
-    const headerAuth = req.headers['authorization'];
     const headerSecret = req.headers['x-access-token'];
 
-    if (headerAuth !== config.headerSecret) {
-      return res.status(404).json({message: 'Unauthorized, Need Authentication'});
-    } else if (typeof headerSecret === 'undefined') {
-      console.log('Token not existed! but Auth defined');
+    if (typeof headerSecret === 'undefined') {
+      console.log('Token not existed!');
       next();
     } else {
       req.token = headerSecret;

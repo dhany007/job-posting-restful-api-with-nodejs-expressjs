@@ -18,15 +18,25 @@ module.exports = {
           console.log(err);
         });
   },
+  getOneCompany: (req, res) => {
+    const id_company = req.params.id_company;
+    companyModels.getOnecompany(id_company)
+        .then((result) => {
+          res.json({
+            success: true,
+            message: 'success get one company',
+            result,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  },
   addCompany: (req, res) => {
-    const {name_company, description_company} = req.body;
-    const logo = req.file.filename;
-
-    const data = {
-      name_company,
-      logo,
-      description_company,
-    };
+    const data = req.body;
+    const host = req.hostname;
+    const filePath = req.protocol + '://' + host + ':' + process.env.PORT + '/src/images/' +req.file.filename;
+    data.logo = filePath;
 
     companyModels.addCompany(data)
         .then((result) => {
