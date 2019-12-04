@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const categoryModels = require('../models/category');
+const uuidv4 = require('uuid/v4'); // input random id dari tiap user
 
 module.exports = {
   getCategory: (req, res) => {
@@ -20,8 +21,14 @@ module.exports = {
   },
   addCategory: (req, res) => {
     const name = req.body;
+    const id_category = uuidv4();
 
-    categoryModels.addCategory(name)
+    const data = {
+      name,
+      id_category,
+    }
+
+    categoryModels.addCategory(data)
         .then((r) => {
           res.json({
             success: true,

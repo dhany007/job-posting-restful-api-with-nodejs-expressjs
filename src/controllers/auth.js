@@ -6,10 +6,12 @@ const setPass = require('../helpers/index');
 const jwt = require('jsonwebtoken');
 const configs = require('../configs/configs');
 const validator = require('validator');
+const uuidv4 = require('uuid/v4'); // input random id dari tiap user
 
 module.exports = {
   Register: (req, res) => {
     const {email, name_user} = req.body;
+    const id = uuidv4();
 
     if (validator.isEmpty(email) || validator.isEmpty(name_user)) {
       res.json({
@@ -32,6 +34,7 @@ module.exports = {
     password = setPass.sha512(password, salt);
 
     const formRegis = {
+      id,
       email,
       salt,
       password,

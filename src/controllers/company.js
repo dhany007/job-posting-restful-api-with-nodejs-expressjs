@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const companyModels = require('../models/company');
+const uuidv4 = require('uuid/v4'); // input random id dari tiap user
 
 module.exports = {
   getCompany: (req, res) => {
@@ -33,10 +34,17 @@ module.exports = {
         });
   },
   addCompany: (req, res) => {
-    const data = req.body;
+    const id_company = uuidv4();
+    const {name_company, description_company} = req.body;
     const host = req.hostname;
     const filePath = req.protocol + '://' + host + ':' + process.env.PORT + '/src/images/' +req.file.filename;
-    data.logo = filePath;
+    const logo = filePath;
+    const data = {
+      id_company,
+      name_company,
+      description_company,
+      logo,
+    }
 
     companyModels.addCompany(data)
         .then((result) => {
