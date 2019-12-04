@@ -20,20 +20,20 @@ module.exports = {
         });
   },
   addCategory: (req, res) => {
-    const name = req.body;
+    const {name_category} = req.body;
     const id_category = uuidv4();
 
     const data = {
-      name,
       id_category,
-    }
+      name_category,
+    };
 
     categoryModels.addCategory(data)
         .then((r) => {
           res.json({
             success: true,
             message: 'Success added a new category',
-            result: name,
+            result: name_category,
           });
         })
         .catch((err) => {
