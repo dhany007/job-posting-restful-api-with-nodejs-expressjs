@@ -8,7 +8,7 @@ const companies = require('./routes/company');
 const authe = require('./routes/auth');
 
 Route
-    .use('/', jobs)
+    .use('/job', jobs)
     .use('/category', categories)
     .use('/company', companies)
     .use('/auth', authe);
