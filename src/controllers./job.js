@@ -77,7 +77,7 @@ module.exports = {
                   let prev = '';
                   if (page > 1) {
                     prevPage = currentPage - 1;
-                    prev = `http://localhost:3001/?page=${prevPage}`;
+                    prev = `https://freejobpost.site/job/?page=${prevPage}`;
                   } else {
                     prev = '';
                   }
@@ -85,7 +85,7 @@ module.exports = {
                   let next = '';
                   if (currentPage < totalPage) {
                     nextPage = currentPage+1;
-                    next = `http://localhost:3001/?page=${nextPage}`;
+                    next = `https://freejobpost.site/job/?page=${nextPage}`;
                   } else {
                     next = '';
                   }
